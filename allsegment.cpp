@@ -104,18 +104,25 @@ int query(int at,int L,int R,int pos)
 
 
 
+#include<bits/stdc++.h>
+using namespace std;
+#define MAX 101010
+#define sf(a) scanf("%lld",&a)
+#define pf(a) printf("%lld\n",a)
+#define light(a) printf("Case %lld:\n",a)
+#define li long long int
 struct node
 {
-	int sum;
+	li sum;
 }tree[4*MAX];
-int lazy[4*MAX];
+li lazy[4*MAX];
 node merge(node a,node b)
 {
 	node ret;
 	ret.sum=a.sum+b.sum;
 	return ret;
 }
-void lazyUpdate(int n,int st,int ed)
+void lazyUpdate(li n,li st,li ed)
 {
 	if(lazy[n]==0) return;
 	tree[n].sum+=(ed-st+1)*lazy[n];
@@ -126,27 +133,28 @@ void lazyUpdate(int n,int st,int ed)
 	}
 	lazy[n]=0;
 }
-void build(int n,int st,int ed)
+void build(li n,li st,li ed)
 {
-	lazy[n]=0;
+	lazy[n]=0LL;
 	if(st==ed) {
-		tree[n].sum=ara[st];return;
+		tree[n].sum=0LL;
+		return;
 	}
-	int mid=(st+ed)/2;
+	li mid=(st+ed)/2;
 	build(2*n,st,mid);
 	build(2*n+1,mid+1,ed);
 	tree[n]=merge(tree[2*n],tree[2*n+1]);	
 }
-node query(int n,int st,int ed,int i,int j)
+node query(li n,li st,li ed,li i,li j)
 {
 	lazyUpdate(n,st,ed);
 	if(st>=i && ed<=j) return tree[n];
-	int mid=(st+ed)/2;
+	li mid=(st+ed)/2;
 	if(mid<i) return query(2*n+1,mid+1,ed,i,j);
 	else if(mid>=j) return query(2*n,st,mid,i,j);
 	else return  merge(query(2*n+1,mid+1,ed,i,j),query(2*n,st,mid,i,j));
 }
-void update(int n,int st,int ed,int i,int j,int v)
+void update(li n,li st,li ed,li i,li j,li v)
 {
 	lazyUpdate(n,st,ed);
 	if(st>j || ed<i) return;
@@ -156,13 +164,11 @@ void update(int n,int st,int ed,int i,int j,int v)
 		lazyUpdate(n,st,ed);
 		return;
 	}
-	int mid=(st+ed)/2;
+	li mid=(st+ed)/2;
 	update(2*n,st,mid,i,j,v);
 	update(2*n+1,mid+1,ed,i,j,v);
 	tree[n]=merge(tree[2*n],tree[2*n+1]);	
 }
-
-
 
 
 
