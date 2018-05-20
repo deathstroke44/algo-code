@@ -21,6 +21,10 @@ int64 find(int64 node) {
 void unite(int64 A, int64 B) {
     int64 rootA = find(A);
     int64 rootB = find(B);
+    if(rootA==rootB)
+    {
+    	return;
+	}
     if (height[rootA] > height[rootB]) {
         father[rootB] = rootA;
         height[rootA] = max(height[rootA], height[rootB] + 1);
