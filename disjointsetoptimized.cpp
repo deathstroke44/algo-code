@@ -1,25 +1,26 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define N 100005
-int father[N],height[N];
+typedef long long int int64;
+int64 father[N],height[N];
 
 void init() {
-    for (int i = 0; i < N; ++i) {
+    for (int64 i = 0; i < N; ++i) {
         father[i] = i;
         height[i] = 0;
     }
 }
 
-int find(int node) {
+int64 find(int64 node) {
     if (father[node] != node) {
         father[node] = find(father[node]);
     }
     return father[node];
 }
 
-void unite(int A, int B) {
-    int rootA = find(A);
-    int rootB = find(B);
+void unite(int64 A, int64 B) {
+    int64 rootA = find(A);
+    int64 rootB = find(B);
     if (height[rootA] > height[rootB]) {
         father[rootB] = rootA;
         height[rootA] = max(height[rootA], height[rootB] + 1);
