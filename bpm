@@ -1,0 +1,99 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ff first
+#define ss second
+const int maxn = 1005;
+typedef pair<double,double> pii;
+vector <int> adj[maxn];
+bool vis[maxn];
+int Left[maxn], Right[maxn];
+vector<pii> gop,hol;
+bool dfs(int u) {
+	if(vis[u]) return false;
+	vis[u] = true;
+	int len = adj[u].size(), i, v;
+	for(i=0; i<len; i++) {
+		v = adj[u][i];
+		if(Right[v]==-1) {
+			Right[v] = u, Left[u] = v;
+			return true;
+		}
+	}
+	for(i=0; i<len; i++) {
+		v = adj[u][i];
+		if(dfs(Right[v])) {
+			Right[v] = u, Left[u] = v;
+			return true;
+		}
+	}
+	return false;
+}
+
+int bpm(int n) {
+
+
+	int i, ret = 0;
+	bool done;
+
+	memset(Left, -1, sizeof(Left));
+	memset(Right, -1, sizeof(Right));
+
+	do {
+		done = true;
+
+		memset(vis, 0, sizeof(vis));
+
+		for(i=0; i<n; i++) {
+			if(Left[i]==-1 && dfs(i)) {
+				done = false;
+			}
+		}
+	} while(!done);
+
+	for(i=0; i<n; i++) ret += (Left[i]!=-1);
+	return ret;
+}
+
+int a[1001][1001];
+
+int main() {
+
+	//   freopen("in.txt", "r", stdin);
+
+	int test, cs = 0;
+	int n,m;double s,v;
+	while(cin>>n>>m>>s>>v) {
+		gop.clear();hol.clear();
+		for(int i = 0; i<maxn; i++) adj[i].clear();
+		double x,y;
+		for(int i=0;i<n;i++)
+		{
+			cin>>x>>y;
+			gop.push_back(pii(x,y));
+		}
+		for(int i=0;i<m;i++)
+		{
+			cin>>x>>y;
+			hol.push_back(pii(x,y));
+		}
+		for(int i=0;i<n;i++)
+		{
+			pii uu=gop[i];
+			for(int j=0;j<m;j++)
+			{
+				pii vv=hol[j];
+				double dis=(uu.ff-vv.ff)*(uu.ff-vv.ff)+(uu.ss-vv.ss)*(uu.ss-vv.ss);
+				dis/=(double) v;
+				dis/=(double) v;
+				if(dis<=s*s)
+				{
+					adj[i].push_back(j+n);
+				}
+			}
+		}
+		int ret=bpm(n+m);
+		cout<<n-ret<<endl;
+	}
+
+	return 0;
+}
