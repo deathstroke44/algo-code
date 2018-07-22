@@ -20,61 +20,51 @@ using namespace std;
 int n;
 double co[maxn];
 int flag;
-double f(double x)
-{
+double f(double x) {
 	double v=1,ans=0;
-	for(int i=0;i<=n;i++)
-	{
+	for(int i=0; i<=n; i++) {
 		ans+=v*co[i];
 		v*=x;
 	}
 	return ans;
 }
-double bisection(double a,double b,double tol)
-{
+double bisection(double a,double b,double tol) {
 	flag=true;
-	if (f(a)*f(b)>=0)
-    {
-        cout << "You have not assumed right a and b\n";
-        flag=false;
-        return 0;
-    }
-    int tf=0;
-    double c,pc;
-    while(true)
-    {
-    	c=(a+b)/2;
-    	if (f(c) == 0.0)
-            break;
- 
-        else if (f(c)*f(a)<0.000)
-            b=c;
-        else
-            a=c;
-    	
-    	if(tf)
-    	{
-    		double ftol=fabs(pc-c);
-    		if(ftol<0)
-    		{
-    			ftol*=(-1.00);
+	if (f(a)*f(b)>=0) {
+		cout << "You have not assumed right a and b\n";
+		flag=false;
+		return 0;
+	}
+	int tf=0;
+	double c,pc;
+	while(true) {
+		c=(a+b)/2;
+		if (f(c) == 0.0)
+			break;
+
+		else if (f(c)*f(a)<0.000)
+			b=c;
+		else
+			a=c;
+
+		if(tf) {
+			double ftol=fabs(pc-c);
+			if(ftol<0) {
+				ftol*=(-1.00);
 			}
-    		ftol/=fabs(c);
-    		if(ftol<=tol)
-    		{
-    			return c;
+			ftol/=fabs(c);
+			if(ftol<=tol) {
+				return c;
 			}
 		}
 		tf=1;
 		pc=c;
 	}
 }
-int main()
-{
+int main() {
 	double a=-5000,b=5000;
 	cin>>n;
-	for(int i=n;i>=0;i--)
-	{
+	for(int i=n; i>=0; i--) {
 		cin>>co[i];
 	}
 	double ret=bisection(a,b,0.0000005);
