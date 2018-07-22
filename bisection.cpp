@@ -60,7 +60,6 @@ double bisection(double a,double b,double tol)
     			ftol*=(-1.00);
 			}
     		ftol/=fabs(c);
-    	//	cout<<c<<" &&& "<<pc<<" "<<ftol<<endl;
     		if(ftol<=tol)
     		{
     			return c;
