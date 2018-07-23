@@ -62,13 +62,20 @@ double bisection(double a,double b,double tol) {
 	}
 }
 int main() {
+    FILE *fpw,*fpr;
+    fpr = fopen("input.txt", "r+");
+    fpw = fopen("output.txt", "w+");
 	double a=-5000,b=5000;
-	cin>>n;
+	fscanf(fpr, "%d", &n);
+	cout<<n<<endl;
 	for(int i=n; i>=0; i--) {
-		cin>>co[i];
+		fscanf(fpr, "%lf", &co[i]);
+		cout<<co[i]<<" ";
 	}
+	puts("");
 	double ret=bisection(a,b,0.0000005);
 	cout<<"Root : "<<ret<<endl;
 	printf("Approximate value : %.8lf\n",f(ret));
+	fprintf(fpw, "Root : %.8lf \nApproximate value : %.8lf\n",ret,f(ret));
 	return 0;
 }
