@@ -23,11 +23,10 @@ int n;
 int flag;
 double e=2.71;
 int osf;
-double f(double x)
+double f(double y)
 {
-	x+=273.75;
-	double ret=-log(osf)-139.34411+((1.5757010000000*1e5)/(x))-((6.6423080000000*1e7)/(x*x))+((1.2438000000000*1e10)/(x*x*x))-((8.6219490000000*1e11)/(x*x*x*x));
-	return ret;
+ double x=y+273.15;
+    return -139.34411+1.575701*pow(10,5)/x-6.642308*pow(10,7)/(x*x)+1.2438*pow(10,10)/(x*x*x)-8.621949*pow(10,11)/(pow(x,4))-log(osf);
 }
 double bisection(double a,double b,double tol) {
 	flag=true;
